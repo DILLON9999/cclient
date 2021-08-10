@@ -1,4 +1,4 @@
-module github.com/DILLON9999/cclient-fhttpa
+module github.com/DILLON9999/cclient-fhttp
 
 go 1.16
 

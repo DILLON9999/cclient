@@ -12,7 +12,7 @@ func NewClient(clientHello utls.ClientHelloID, redirectOption string, timeout in
 	
 	var transport http.RoundTripper = &http.Transport{
         	DisableKeepAlives: true,
-		Proxy: http.ProxyURL(proxyUrl)
+		Proxy: http.ProxyURL(proxyUrl),
     	}
 
 	if redirectOption == "False" {

@@ -16,14 +16,6 @@ func NewClient(clientHello utls.ClientHelloID, redirectOption string, timeout in
 
 	if redirectOption == "False" {
 		if len(proxyUrl) > 0 && len(proxyUrl[0]) > 0 {
-			if err != nil {
-				return http.Client{
-					CheckRedirect: func(req *http.Request, via []*http.Request) error {
-						return http.ErrUseLastResponse
-					},
-					Timeout: time.Duration(timeout) * time.Second,
-				}, err
-			}
 			return http.Client{
 				CheckRedirect: func(req *http.Request, via []*http.Request) error {
 					return http.ErrUseLastResponse
@@ -42,11 +34,6 @@ func NewClient(clientHello utls.ClientHelloID, redirectOption string, timeout in
 		}
 	} else {
 		if len(proxyUrl) > 0 && len(proxyUrl[0]) > 0 {
-			if err != nil {
-				return http.Client{
-					Timeout: time.Duration(timeout) * time.Second,
-				}, err
-			}
 			return http.Client{
 				Transport: transport,
 				Timeout:   time.Duration(timeout) * time.Second,

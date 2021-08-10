@@ -16,7 +16,6 @@ func NewClient(clientHello utls.ClientHelloID, redirectOption string, timeout in
 
 	if redirectOption == "False" {
 		if len(proxyUrl) > 0 && len(proxyUrl[0]) > 0 {
-			dialer, err := newConnectDialer(proxyUrl[0])
 			if err != nil {
 				return http.Client{
 					CheckRedirect: func(req *http.Request, via []*http.Request) error {
@@ -43,7 +42,6 @@ func NewClient(clientHello utls.ClientHelloID, redirectOption string, timeout in
 		}
 	} else {
 		if len(proxyUrl) > 0 && len(proxyUrl[0]) > 0 {
-			dialer, err := newConnectDialer(proxyUrl[0])
 			if err != nil {
 				return http.Client{
 					Timeout: time.Duration(timeout) * time.Second,

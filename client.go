@@ -3,8 +3,6 @@ package cclient
 import (
 	http "github.com/useflyent/fhttp"
 
-	"golang.org/x/net/proxy"
-
 	"time"
 
 	utls "github.com/refraction-networking/utls"

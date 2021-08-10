@@ -11,6 +11,10 @@ import (
 )
 
 func NewClient(clientHello utls.ClientHelloID, redirectOption string, timeout int32, proxyUrl ...string) (http.Client, error) {
+	
+	var transport http.RoundTripper = &http.Transport{
+        	DisableKeepAlives: true,
+    	}
 
 	if redirectOption == "False" {
 		if len(proxyUrl) > 0 && len(proxyUrl[0]) > 0 {
@@ -27,7 +31,7 @@ func NewClient(clientHello utls.ClientHelloID, redirectOption string, timeout in
 				CheckRedirect: func(req *http.Request, via []*http.Request) error {
 					return http.ErrUseLastResponse
 				},
-				Transport: newRoundTripper(clientHello, dialer),
+				Transport: transport,
 				Timeout:   time.Duration(timeout) * time.Second,
 			}, nil
 		} else {
@@ -35,7 +39,7 @@ func NewClient(clientHello utls.ClientHelloID, redirectOption string, timeout in
 				CheckRedirect: func(req *http.Request, via []*http.Request) error {
 					return http.ErrUseLastResponse
 				},
-				Transport: newRoundTripper(clientHello, proxy.Direct),
+				Transport: transport,
 				Timeout:   time.Duration(timeout) * time.Second,
 			}, nil
 		}
@@ -48,12 +52,12 @@ func NewClient(clientHello utls.ClientHelloID, redirectOption string, timeout in
 				}, err
 			}
 			return http.Client{
-				Transport: newRoundTripper(clientHello, dialer),
+				Transport: transport,
 				Timeout:   time.Duration(timeout) * time.Second,
 			}, nil
 		} else {
 			return http.Client{
-				Transport: newRoundTripper(clientHello, proxy.Direct),
+				Transport: transport,
 				Timeout:   time.Duration(timeout) * time.Second,
 			}, nil
 		}

@@ -1,4 +1,4 @@
-module github.com/DILLON9999/cclient-fhttp5
+module github.com/DILLON9999/cclient-fhttp-memory
 
 go 1.16
 
